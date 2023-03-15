@@ -24,10 +24,9 @@ def micOutput():
   with mic as source:
     audio = r.listen(source)
   output = r.recognize_google(audio)
-  print(f"{output}")
-  client.send_message("/chatbox/input", f"{output}") 
 
-    
+  print(output)
+  client.send_message("/chatbox/input", [output, True]) 
 
 
 while True:
