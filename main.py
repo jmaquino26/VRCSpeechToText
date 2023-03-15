@@ -3,19 +3,9 @@ import random
 import time
 from inputs import devices
 import speech_recognition as sr
+import keyboard
 
 from pythonosc import udp_client
-
-
-mic = sr.Microphone(device_index=8)
-r = sr.Recognizer()
-print("Speak Now")
-
-with mic as source:
-  audio = r.listen(source)
-
-output = r.recognize_google(audio)
-
 
 if __name__ == "__main__":
   parser = argparse.ArgumentParser()
@@ -27,4 +17,27 @@ if __name__ == "__main__":
 
   client = udp_client.SimpleUDPClient(args.ip, args.port)
 
-client.send_message("/chatbox/input", f"{output}")
+def micOutput():
+  mic = sr.Microphone(device_index=8)
+  r = sr.Recognizer()
+  print("Speak Now")  
+  with mic as source:
+    audio = r.listen(source)
+  output = r.recognize_google(audio)
+  print(f"{output}")
+  client.send_message("/chatbox/input", f"{output}") 
+
+    
+
+
+while True:
+    print("Select Option\n (p) Start Recording")
+    if keyboard.read_key('p'):
+       micOutput()
+  
+    
+      
+       
+  
+  
+
